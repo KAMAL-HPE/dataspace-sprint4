@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  dspc-meta-rest-service:
+    image: nsyk/dspc-meta-rest-service:v1
+    container_name: dspc-meta-rest-service
+    env_file:
+      - mr7.env
+    ports:
+      - 8190:8190
+    volumes:
+      - /dspc-services:/app/services
+    networks:
+      - dataspaces-net
+
+  dspc-plugins-meta-datahub:
+    image: nsyk/dspc-plugins-meta-datahub:v1
+    container_name: dspc-plugins-meta-datahub
+    env_file:
+      - mr7.env
+    ports:
+      - 8190:8190
+    volumes:
+      - /dspc-plugins:/app/plugins
+    networks:
+      - dataspaces-net
+
+  dspc-web-ui:
+    image: nsyk/dspc-web-ui:v1
+    container_name: dspc-web-ui
+    env_file:
+      - mr7.env
+    ports:
+      - 80:80
+      - 443:443
+      - 3000:3000
+    volumes:
+      - /dspc-ui:/app/ui
+    networks:
+      - dataspaces-net
+
+networks:
+  dataspaces-net:
+    name: dataspaces-net
